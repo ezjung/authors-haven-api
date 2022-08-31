@@ -1,5 +1,7 @@
 -r base.txt
 
+django-dotenv
+gunicorn
 psycopg2-binary==2.9.1
 flake8==4.0.1
 black==21.12b0
