@@ -1,9 +1,9 @@
 import os
 
 from pathlib import Path
-# import environ
+import environ
 
-# env = environ.Env()
+env = environ.Env()
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -11,7 +11,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = ROOT_DIR / "core_apps"
 
 
-DEBUG = str(os.environ.get('DEBUG')) == "1"
+DEBUG = env.bool('DJANGO_DEBUG', False)
 
 
 # Application definition
@@ -97,17 +97,10 @@ DB_HOST = os.environ.get("POSTGRES_HOST")
 DB_PORT = os.environ.get("POSTGRES_PORT")
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": DB_DATABASE,
-        "USER": DB_USERNAME,
-        "PASSWORD": DB_PASSWORD,
-        "HOST": DB_HOST,
-        "PORT": DB_PORT
-    }
+    "default": env.db("DATABASE_URL")
 }
 
-# DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
@@ -151,23 +144,25 @@ USE_TZ = True
 SITE_ID = 1
 
 ADMIN_URL = "supersecret/"
-ADMINS = ['''Sung Park''', 'get.dodam@gmail.com']
+ADMINS = [('''Sung Park''', 'get.dodam@gmail.com')]
+
+MANAGERS = ADMINS
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-# STATIC_URL = '/staticfiles/'
-STATIC_ROOT = ROOT_DIR / 'staticfiles'
+# STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = str(ROOT_DIR / 'staticfiles')
 STATICFILES_DIRS = []
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = ROOT_DIR / 'mediafiles'
+MEDIA_URL = '/mediafiles/'
+MEDIA_ROOT = str(ROOT_DIR / 'mediafiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

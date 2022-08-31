@@ -1,11 +1,13 @@
-import os
 from .base import *
-# from .base import environ
+from .base import env
 
-DEBUG = str(os.environ.get('DEBUG')) == "1"
+DEBUG = True
 # SECRET_KEY = 'django-insecure-ll#c60o!pna9efps58gd80#u)yc_1!=c&61r0#)c65h(^u&cmf'
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = env(
+    "DJANGO_SECRET_KEY", 
+    default='django-insecure-ll#c60o!pna9efps58gd80#u)yc_1!=c&61r0#)c65h(^u&cmf'
+)
 
 ALLOWED_HOSTS = [
     'localhost',

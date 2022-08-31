@@ -1,0 +1,8 @@
+.vscode
+.idea
+.coverage*
+.DS_Store
+README.md
+.gitignore
+**/.git
+commands.md
